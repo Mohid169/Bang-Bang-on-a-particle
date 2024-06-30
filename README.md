@@ -1,6 +1,6 @@
 # Bang Bang Control Policy - Double Integrator System
 
-This project simulates a simple control system for a position and velocity scenario. The system is governed by the following dynamics and control logic:
+This project simulates a simple control system for a position and velocity scenario. It is based on example 7.2 in Underactuated Robotics. The system is governed by the following dynamics and control logic:
 
 ## Dynamics
 
