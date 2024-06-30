@@ -1,10 +1,10 @@
 # Bang Bang Control Policy - Double Integrator System
 
-This project simulates a simple control system for a position and velocity scenario. It is based on example 7.2 in Underactuated Robotics. The system is governed by the following dynamics and control logic:
+This is a s olution to the minimum time problem for the double integrator with input constraints. A Bang-bang controller was implemented as an optimal solution. It is based on example 7.2 in Underactuated Robotics. The system is governed by the following dynamics and control logic:
 
 ## Dynamics
 
-The system dynamics are described by:
+The system dynamics are described by (note initial conditions were chosen such that c=0):
 - Position (q) with initial condition q0 = -4.5
 - Velocity (q_dot) with initial condition q_dot0 = 3
 
