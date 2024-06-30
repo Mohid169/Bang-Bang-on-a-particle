@@ -1,6 +1,6 @@
 # Bang Bang Control Policy - Double Integrator System
 
-This is a s olution to the minimum time problem for the double integrator with input constraints. A Bang-bang controller was implemented as an optimal solution. It is based on example 7.2 in Underactuated Robotics. The system is governed by the following dynamics and control logic:
+This is a solution to the minimum time problem for the double integrator with input constraints. A Bang-bang controller was implemented as an optimal solution. It is based on example 7.2 in Underactuated Robotics. The system is governed by the following dynamics and control logic:
 
 ## Dynamics
 
