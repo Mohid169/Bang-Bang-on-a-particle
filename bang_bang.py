@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.widgets import Button
 
 # Time parameters
 dt = 0.1  # Reduced time step for higher resolution
@@ -30,8 +31,14 @@ def calculate_control(q, q_dot):
     else:
         return -1
 
+# Animation control variable
+anim_running = True
+
 def update(i):
-    global q, q_dot, u
+    global q, q_dot, u, anim_running
+    
+    if not anim_running:
+        return line_q, line_q_dot
     
     if i == 0:
         q[i] = q0
@@ -39,7 +46,7 @@ def update(i):
     else:
         # Calculate control input
         u[i] = calculate_control(q[i-1], q_dot[i-1])
-        print(u[i])
+        
         # Update velocity and position using the control input
         q_dot[i] = q_dot[i-1] + u[i] * dt
         q[i] = q[i-1] + q_dot[i-1] * dt
@@ -49,6 +56,15 @@ def update(i):
     line_q_dot.set_data(time[:i+1], q_dot[:i+1])
     
     return line_q, line_q_dot
+
+# Pause and Resume button functions
+def pause_animation(event):
+    global anim_running
+    anim_running = False
+
+def resume_animation(event):
+    global anim_running
+    anim_running = True
 
 # Create figure and axes
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
@@ -68,7 +84,6 @@ ax2.set_ylabel('Velocity (q_dot)')
 ax2.legend()
 ax2.grid()
 
-
 # Set initial y-axis limits
 ax1.set_ylim(-5, 5)
 ax2.set_ylim(-5, 5)
@@ -76,8 +91,21 @@ ax2.set_ylim(-5, 5)
 # Set initial x-axis limits
 ax1.set_xlim(0, T)
 ax2.set_xlim(0, T)
+
+# Create pause and resume buttons
+pause_ax = plt.axes([0.8, 0.025, 0.1, 0.04])
+pause_button = Button(pause_ax, 'Pause')
+pause_button.on_clicked(pause_animation)
+
+resume_ax = plt.axes([0.9, 0.025, 0.1, 0.04])
+resume_button = Button(resume_ax, 'Resume')
+resume_button.on_clicked(resume_animation)
+
 # Set up the animation
-ani = FuncAnimation(fig, update, frames=len(time), blit=True)
+ani = FuncAnimation(fig, update, frames=len(time), blit=True, interval=dt * 1000, repeat=False)
+
+# Save animation as GIF
+ani.save('control_system_animation.gif', writer='pillow', fps=10)  # Adjust fps as needed
 
 plt.tight_layout()
 plt.show()
